@@ -4415,8 +4415,8 @@ button:not(.no-np-press):active, a.cta:active, .boundary-copy-pill:active { tran
     }
     @media (max-width: 767px) {
       .honey-bottom-nav { display: flex; justify-content: space-around; align-items: center; gap: 4px; }
-      .app { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important; }
-      .view.active { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+      .app { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important; }
+      .view.active { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
     }
     .honey-nav-btn {
       display: flex; flex-direction: column; align-items: center; gap: 3px;
@@ -6626,6 +6626,176 @@ a:active {
 }
 @media (min-width: 900px) {
   .honey-install-hint { bottom: calc(18px + env(safe-area-inset-bottom, 0px)); }
+}
+</style>
+
+<style id="responsive-layout-fix-v1">
+html { overflow-x: hidden; }
+body { overflow-x: hidden; min-width: 0; }
+
+:is(.app-shell, .layout, main, .main-scroll, .main, .content, .view, .stack,
+    .tab-content, #tab-viewport, #app, .app, .card, .grid-2, .grid-3,
+    .plate-builder-shell, .plate-builder-list, .plate-support-card,
+    .plate-visual, .desktop-sidebar, .chapter-wrap, .topbar,
+    .app-header, .screen, .quick-action-strip, .bottom-nav button,
+    .mob-nav-btn, .nav-btn, .honey-nav-btn, .grid) {
+  min-width: 0;
+}
+
+:is(p, h1, h2, h3, h4, h5, h6, li, label, .card, button,
+    input, textarea, select, .chip, .pill, .plate-segment,
+    .plate-support-card, .nav-label, .bottom-nav-label) {
+  overflow-wrap: normal;
+  word-break: normal;
+  white-space: normal;
+}
+
+@media (max-width: 1024px) and (min-width: 641px) {
+  .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+
+@media (max-width: 900px) {
+  .grid-2 { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 640px) {
+  .grid-3 { grid-template-columns: 1fr !important; }
+}
+
+.app-shell,
+.content {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: min(1200px, 100%) !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.dark .honey-install-hint {
+  background: var(--card);
+  border-color: var(--line, rgba(255, 255, 255, 0.12));
+  color: var(--text);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+body.dark .honey-install-sheet {
+  background: var(--card);
+  color: var(--text);
+  border-color: var(--line, rgba(255, 255, 255, 0.12));
+}
+
+@media (max-width: 767px) {
+  body.honey-install-hint-active .main {
+    padding-bottom: calc(122px + min(48vh, 320px) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+</style>
+
+<style id="layout-stabilisation-final">
+/* System stabilisation — structural constraints only (no redesign) */
+*, *::before, *::after { box-sizing: border-box; }
+* { min-width: 0; }
+svg, img, video, canvas, iframe { min-width: auto; }
+
+html { overflow-x: hidden; }
+body {
+  overflow-x: hidden;
+  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+}
+
+p, span, button, label {
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.container,
+.app-shell,
+.content,
+.app > .main {
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: max(16px, env(safe-area-inset-left)) !important;
+  padding-right: max(16px, env(safe-area-inset-right)) !important;
+  box-sizing: border-box !important;
+}
+
+.grid-2,
+.grid-3,
+.grid.cols-2,
+.grid.cols-3,
+.grid.cols-4,
+.feel-grid,
+.plate-builder-list {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)) !important;
+  gap: 16px !important;
+}
+
+.softer-quick-reset-card .grid-3 {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  grid-template-columns: unset !important;
+  gap: 0 !important;
+}
+
+@media (max-width: 899px) {
+  .grid-2,
+  .grid-3,
+  .grid.cols-2,
+  .grid.cols-3,
+  .grid.cols-4,
+  .feel-grid,
+  .snapshot-strip,
+  .today-card-grid,
+  .plate-builder-list {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 599px) {
+  .grid-2,
+  .grid-3,
+  .grid.cols-2,
+  .grid.cols-3,
+  .grid.cols-4,
+  .snapshot-strip {
+    grid-template-columns: 1fr !important;
+  }
+  .card,
+  article.card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+:is(.quick-action-strip, .stack, .hero-luxury-chips) {
+  flex-wrap: wrap !important;
+}
+:is(.quick-action-strip, .stack) > * {
+  flex: 1 1 280px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 1100px) {
+  .plate-builder-shell {
+    grid-template-columns: 1fr !important;
+    align-items: stretch !important;
+  }
+}
+
+html.dark [style*="background:#fff"],
+html.dark [style*="background: #fff"],
+html.dark [style*="background-color:#fff"],
+body.dark [style*="background:#fff"],
+body.dark [style*="background: #fff"],
+body.theme-dark [style*="background:#fff"],
+body.theme-dark [style*="background: #fff"] {
+  background: var(--surface, var(--card, #2a2624)) !important;
+  color: var(--text, inherit) !important;
 }
 </style>
 
@@ -12773,6 +12943,9 @@ a:active {
           else switchView("today");
           refreshAll();
           if(typeof window.honeyTryPwaWelcome === "function") window.honeyTryPwaWelcome();
+          try {
+            if(typeof window.__honeyTryInstallHint === "function") window.__honeyTryInstallHint();
+          } catch(_) {}
         });
       });
     }
@@ -12865,17 +13038,24 @@ a:active {
       }
       function showHint(){
         try{
+          const gate = document.getElementById("honeyEntryGate");
+          if(gate && !gate.hidden) return;
           if(localStorage.getItem(KEY) === "true") return;
           if(!isMobile()) return;
           if(hint) hint.classList.add("is-visible");
+          document.body.classList.add("honey-install-hint-active");
         }catch(e){}
       }
       function hideHint(persist){
         if(hint) hint.classList.remove("is-visible");
+        document.body.classList.remove("honey-install-hint-active");
         if(persist){
           try{ localStorage.setItem(KEY, "true"); }catch(e){}
         }
       }
+      window.__honeyTryInstallHint = function honeyTryInstallHint(){
+        setTimeout(showHint, 400);
+      };
       function closeSheet(){
         if(overlay){
           overlay.classList.remove("is-open");
