@@ -7080,6 +7080,239 @@ body.theme-dark .honey-mobile-context-greet {
 }
 </style>
 
+<style id="honey-premium-v2">
+/* ═══════════════════════════════════════════════
+   HONEY RESET — PREMIUM UPGRADE V2
+   ─────────────────────────────────────────────── */
+
+/* ── 1. SHADOW SYSTEM ── */
+:root {
+  --shadow-card: 0 2px 10px rgba(92,61,46,.07), 0 1px 3px rgba(92,61,46,.04);
+  --shadow-elevated: 0 10px 32px rgba(92,61,46,.12), 0 2px 8px rgba(92,61,46,.06);
+  --shadow-float: 0 20px 56px rgba(92,61,46,.16), 0 4px 14px rgba(92,61,46,.08);
+  --shadow-inner: inset 0 1px 0 rgba(255,255,255,.75);
+}
+body.dark {
+  --shadow-card: 0 2px 10px rgba(0,0,0,.28), 0 1px 3px rgba(0,0,0,.18);
+  --shadow-elevated: 0 10px 32px rgba(0,0,0,.42), 0 2px 8px rgba(0,0,0,.28);
+  --shadow-float: 0 20px 56px rgba(0,0,0,.58), 0 4px 14px rgba(0,0,0,.36);
+  --shadow-inner: inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+/* ── 2. DARK MODE: Warmer, less muddy surfaces ── */
+body.dark {
+  --canvas: color-mix(in srgb, #1a1410 78%, var(--vibe-accent) 22%) !important;
+  --card: color-mix(in srgb, #241c17 70%, var(--vibe-accent) 30%) !important;
+  --card-elevated: color-mix(in srgb, #2c2420 65%, var(--vibe-accent) 35%) !important;
+}
+body.dark .card,
+body.theme-dark .card {
+  background: var(--card) !important;
+  box-shadow: var(--shadow-elevated), var(--shadow-inner) !important;
+  border-color: rgba(220,185,155,.1) !important;
+}
+
+/* ── 3. CARD SYSTEM ── */
+.card {
+  border-radius: var(--radius-lg, 24px) !important;
+  box-shadow: var(--shadow-card), var(--shadow-inner) !important;
+  transition: transform 200ms ease, box-shadow 200ms ease, background-color 220ms ease, border-color 220ms ease !important;
+}
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-elevated), var(--shadow-inner) !important;
+  }
+}
+
+/* ── 4. BOTTOM NAV — Fix 5-item compression at 320px ── */
+.bottom-nav-btn {
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+  transition: color 150ms ease, background 150ms ease, transform 120ms ease !important;
+}
+/* 360px and below: icons only (hide labels) */
+@media (max-width: 360px) {
+  .bottom-nav-btn .label,
+  .honey-bottom-nav .bottom-nav-btn span:not(.icon) {
+    display: none !important;
+  }
+  .bottom-nav-btn {
+    font-size: 0 !important;
+    gap: 0 !important;
+    padding: 10px 4px !important;
+  }
+}
+/* Ensure honey nav uses full width on small screens */
+.honey-bottom-nav, .bottom-nav {
+  width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  transform: none !important;
+  border-radius: 0 !important;
+  max-width: 100% !important;
+  padding-left: max(12px, env(safe-area-inset-left, 0px)) !important;
+  padding-right: max(12px, env(safe-area-inset-right, 0px)) !important;
+}
+
+/* ── 5. HABIT SIGNAL DOTS: Premium animation ── */
+@keyframes honey-dot-bloom {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+.tt-circle {
+  transition: background 200ms ease, border-color 200ms ease, transform 200ms ease !important;
+  border-radius: 50% !important;
+}
+.tt-circle.done, .tt-circle.completed {
+  animation: honey-dot-bloom 380ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tt-circle.done, .tt-circle.completed { animation: none !important; }
+}
+
+/* ── 6. TASK ITEMS — Fix 4-action row overflow ── */
+.app-card, .three-things-card, article.card {
+  border-radius: var(--radius-lg, 24px) !important;
+  box-shadow: var(--shadow-card), var(--shadow-inner) !important;
+}
+/* Task action buttons — stack on narrow screens */
+@media (max-width: 420px) {
+  .task-actions, .task-row-actions {
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+}
+
+/* ── 7. BUTTONS ── */
+.btn, .cta, button.primary {
+  border-radius: 14px !important;
+  font-weight: 600 !important;
+  transition: transform 140ms ease, box-shadow 170ms ease !important;
+}
+.btn:active { transform: scale(0.97) !important; }
+
+/* ── 8. SIDEBAR POLISH ── */
+.sidebar {
+  border-right: 1px solid var(--border, rgba(180,150,120,.18)) !important;
+}
+.sidebar-nav-item, .nav-item {
+  border-radius: 12px !important;
+  transition: background 150ms ease, color 150ms ease, transform 120ms ease !important;
+}
+@media (hover: hover) {
+  .sidebar-nav-item:hover, .nav-item:hover { transform: translateX(2px) !important; }
+}
+
+/* ── 9. WEEKLY WRAP BARS: Visual richness ── */
+.progress-bar, .bar-fill {
+  border-radius: 999px !important;
+  height: 7px !important;
+  min-height: 7px !important;
+}
+.progress-track, .bar-track {
+  border-radius: 999px !important;
+  height: 7px !important;
+  overflow: hidden !important;
+  background: color-mix(in srgb, var(--honey-soft, #f0e4c4) 60%, transparent) !important;
+}
+body.dark .progress-track, body.dark .bar-track {
+  background: color-mix(in srgb, var(--card) 85%, var(--honey-deep, #a67c3a) 15%) !important;
+}
+
+/* ── 10. SECTION SPACING ── */
+.section-label, .section-kicker, .kicker {
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.07em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 12px !important;
+}
+
+/* ── 11. INPUTS ── */
+input[type="text"], input[type="number"], input[type="email"], select, textarea {
+  border-radius: 12px !important;
+  border-width: 1.5px !important;
+  transition: border-color 180ms ease, box-shadow 180ms ease !important;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--honey, #d4a853) !important;
+  box-shadow: 0 0 0 3px rgba(212,168,83,.15) !important;
+  outline: none !important;
+}
+
+/* ── 12. DONUT RING (Calm Level) ── */
+#donutCalm, .calm-donut {
+  filter: drop-shadow(0 10px 24px rgba(212,168,83,.2)) !important;
+}
+
+/* ── 13. CHIPS & PILLS ── */
+.chip, .pill {
+  border-radius: 999px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 5px 11px !important;
+}
+
+/* ── 14. CARD ENTRY ANIMATION ── */
+@keyframes honey-card-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.99); }
+  to   { opacity: 1; transform: none; }
+}
+.card, .app-card {
+  animation: honey-card-in 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card, .app-card { animation: none !important; }
+}
+
+/* ── 15. BRAND TITLE ── */
+.brand-title-main, .brand h2 {
+  letter-spacing: -0.02em !important;
+  line-height: 1.1 !important;
+}
+
+/* ── 16. TOUCH TARGETS — Ensure 44px minimums ── */
+button, [role="button"], .nav-item, .sidebar-nav-item {
+  min-height: 44px !important;
+}
+
+/* ── 17. SECTION DIVIDERS ── */
+.divider, hr {
+  border-color: var(--line, rgba(180,150,120,.12)) !important;
+  margin: 16px 0 !important;
+}
+
+/* ── 18. JOURNEY CARDS ── */
+.journey-card {
+  border-radius: 20px !important;
+  box-shadow: var(--shadow-card), var(--shadow-inner) !important;
+  transition: transform 200ms ease, box-shadow 200ms ease !important;
+}
+@media (hover: hover) {
+  .journey-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-elevated), var(--shadow-inner) !important;
+  }
+}
+
+/* ── 19. RESOURCE ITEMS ── */
+.resource {
+  border-radius: 16px !important;
+  transition: transform 200ms ease, box-shadow 200ms ease !important;
+}
+
+/* ── 20. MOBILE HEADER: Reduce visual weight ── */
+@media (max-width: 860px) {
+  .topbar, .app-topbar {
+    border-radius: 0 0 20px 20px !important;
+    box-shadow: 0 6px 24px rgba(92,61,46,.1), 0 1px 0 rgba(92,61,46,.06) !important;
+  }
+}
+</style>
+
 </head>
 <body>
   <div id="honeyEntryGate" class="entry-gate-overlay" hidden>
@@ -13546,6 +13779,322 @@ body.theme-dark .honey-mobile-context-greet {
   else window.addEventListener("load", reveal, { once: true });
 })();
 </script>
+
+<style id="honey-system-v3">
+/* ── Phase 4+5: Honey Reset premium depth & hierarchy ── */
+
+/* Welcome card: stronger visual anchor — this IS the hero */
+.welcome-card {
+  box-shadow:
+    0 20px 48px rgba(94,79,73,.18),
+    0 4px 12px rgba(94,79,73,.08),
+    inset 0 1px 0 rgba(255,255,255,.92) !important;
+  border-color: rgba(232,207,193,.55) !important;
+}
+body.dark .welcome-card,
+body.theme-dark .welcome-card,
+html.dark body .welcome-card {
+  box-shadow:
+    0 20px 48px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.06) !important;
+  border-color: color-mix(in srgb, var(--vibe-accent) 18%, rgba(255,255,255,.06)) !important;
+}
+
+/* Habit signal card: demoted — softer presence, not the hero */
+.card:first-of-type,
+.habit-signal-card,
+[data-section="habit-signal"] {
+  box-shadow:
+    0 2px 8px rgba(94,79,73,.06),
+    inset 0 1px 0 rgba(255,255,255,.8) !important;
+}
+
+/* All cards: warmer shadow system + inner highlight */
+.card, .field, .panel, .step {
+  box-shadow:
+    0 4px 14px rgba(92,61,46,.07),
+    0 1px 3px rgba(92,61,46,.04),
+    inset 0 1px 0 rgba(255,255,255,.78) !important;
+}
+body.dark .card,
+body.dark .field,
+body.dark .panel,
+body.dark .step,
+html.dark body .card {
+  box-shadow:
+    0 4px 16px rgba(0,0,0,.26),
+    inset 0 1px 0 rgba(255,255,255,.05) !important;
+  border-color: rgba(255,255,255,.07) !important;
+}
+
+/* Donut calm: stronger warm glow */
+#donutCalm, .calm-donut, svg.calm-donut {
+  filter: drop-shadow(0 12px 28px rgba(212,168,83,.25)) !important;
+}
+
+/* Calm level label: larger, more readable */
+.calm-label, .donut-label, [class*="calm-level"] {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* Honey habit dots: bloom animation on check */
+.habit-dot, .week-dot, [class*="habit-dot"] {
+  transition: transform 220ms cubic-bezier(0.34,1.56,0.64,1), background 180ms ease !important;
+}
+.habit-dot.checked, .habit-dot.filled, .week-dot.filled {
+  transform: scale(1.15) !important;
+}
+
+/* Primary CTA button: warm honey glow */
+.btn-primary, button[class*="primary"], .cta-btn {
+  box-shadow:
+    0 6px 22px rgba(212,168,83,.32),
+    inset 0 1px 0 rgba(255,255,255,.2) !important;
+  transition: transform 140ms cubic-bezier(0.22,1,0.36,1), box-shadow 160ms ease !important;
+}
+.btn-primary:active, button[class*="primary"]:active {
+  transform: scale(0.97) !important;
+  box-shadow: 0 2px 8px rgba(212,168,83,.22) !important;
+}
+@media (hover: hover) {
+  .btn-primary:hover, button[class*="primary"]:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 10px 28px rgba(212,168,83,.38), inset 0 1px 0 rgba(255,255,255,.25) !important;
+  }
+}
+
+/* Bottom nav: warm pill elevation */
+.honey-bottom-nav, .bottom-nav {
+  box-shadow:
+    0 -1px 0 rgba(212,168,83,.08),
+    0 8px 32px rgba(92,61,46,.14),
+    inset 0 1px 0 rgba(255,255,255,.88) !important;
+}
+body.dark .honey-bottom-nav,
+body.dark .bottom-nav,
+html.dark body .bottom-nav {
+  box-shadow:
+    0 -1px 0 rgba(212,168,83,.06),
+    0 8px 24px rgba(0,0,0,.3),
+    inset 0 1px 0 rgba(255,255,255,.04) !important;
+}
+
+/* Active nav item: warm honey tint pill */
+.bottom-nav-btn.active {
+  background: rgba(212,168,83,.14) !important;
+  border-radius: 12px !important;
+}
+
+/* Dark mode canvas: warmer — reduce muddiness */
+body.dark, html.dark body {
+  --canvas: color-mix(in srgb, #1c1510 80%, var(--vibe-accent, #D4A853) 20%) !important;
+}
+
+/* Progress bars: warm tint */
+.progress-fill, .bar-fill, [class*="progress-fill"] {
+  background: linear-gradient(90deg, var(--honey, #D4A853), color-mix(in srgb, var(--honey, #D4A853) 65%, #c07a3a)) !important;
+  border-radius: 999px !important;
+}
+
+/* Step cards: subtle left-border accent */
+.step, .journey-step {
+  border-left: 3px solid color-mix(in srgb, var(--honey, #D4A853) 60%, transparent) !important;
+}
+
+/* Mobile: tighter Habit Signal spacing */
+@media (max-width: 430px) {
+  .habit-signal-section, [data-section="habit"] { padding: 12px 14px !important; }
+  .habit-dots-row, [class*="dot-row"] { gap: 6px !important; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .habit-dot, .btn-primary, .card { transition: none !important; }
+}
+</style>
+
+<style id="honey-fix-v4">
+/* ── HONEY FIX v4: Audit-Driven Execution Pass ── */
+
+/* FIX CRITICAL: Phantom 7500px height — nested grid in #view-today forces
+   two columns at mobile; right col min-width 300px causes extreme text-wrap height */
+@media (max-width: 899px) {
+  #view-today > .grid {
+    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: clamp(12px, 3vw, 20px) !important;
+  }
+}
+
+/* FIX CRITICAL: Dark mode — body canvas truly dark, not warm-brown */
+body.dark,
+html.dark body {
+  --canvas: #1a1108 !important;
+  --card: #231a0f !important;
+  --card-elevated: #2d2018 !important;
+  --border: rgba(255,255,255,0.08) !important;
+  background:
+    radial-gradient(ellipse 60% 30% at 15% 0%, rgba(212,168,83,0.07), transparent 50%),
+    linear-gradient(180deg, #1a1108 0%, #16100a 55%, #120e07 100%) !important;
+}
+body.dark .card,
+body.dark article.card,
+html.dark body .card,
+html.dark body article.card {
+  background: #271d11 !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+body.dark #view-today .card,
+body.dark #view-today article.card,
+html.dark body #view-today .card {
+  background: rgba(32,22,12,0.88) !important;
+  border-color: rgba(255,255,255,0.07) !important;
+}
+body.dark .welcome-card,
+html.dark body .welcome-card {
+  background: linear-gradient(145deg, #2d2010, #221608) !important;
+}
+body.dark .honey-luxe-hero,
+body.dark #hero-card,
+html.dark body .honey-luxe-hero,
+html.dark body #hero-card {
+  background: linear-gradient(145deg, #2a1e0e 0%, #1e1509 100%) !important;
+  border-color: rgba(212,168,83,0.15) !important;
+}
+body.dark .sidebar,
+html.dark body .sidebar {
+  background: linear-gradient(180deg, #1f1811 0%, #1a1409 100%) !important;
+  border-right-color: rgba(255,255,255,0.06) !important;
+}
+body.dark .topbar, body.dark .app-header,
+html.dark body .topbar, html.dark body .app-header {
+  background: #181108 !important;
+  border-bottom-color: rgba(255,255,255,0.06) !important;
+}
+body.dark .bottom-nav,
+html.dark body .bottom-nav {
+  background: linear-gradient(145deg, #1e1709, #181308) !important;
+  border-color: rgba(255,255,255,0.07) !important;
+}
+
+/* FIX HIGH: Welcome card first on mobile — hero above Habit Signal */
+@media (max-width: 899px) {
+  #view-today > #hero-card { order: -1 !important; }
+}
+
+/* FIX CRITICAL: Task cards at 320px — 2-line clamp, tighter layout */
+@media (max-width: 390px) {
+  .task-row {
+    padding: 10px 12px !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+  }
+  .task-title, .task-row > p:first-child,
+  .task-text, [class*="task-name"] {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    max-width: 100% !important;
+  }
+  .task-row .btn, .task-row button:not([class*="primary"]) {
+    padding: 5px 10px !important;
+    font-size: 11px !important;
+    border-radius: 8px !important;
+  }
+}
+
+/* FIX MEDIUM: Partner name field — placeholder clips at 320px */
+@media (max-width: 360px) {
+  #partnerName,
+  input[placeholder*="Noah"] {
+    font-size: 13px !important;
+  }
+  #partnerName::placeholder {
+    font-size: 11px !important;
+    letter-spacing: -0.01em !important;
+  }
+}
+
+/* FIX MEDIUM: Select dropdowns — styled custom (removes OS appearance) */
+select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23996644'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  background-size: 10px 6px !important;
+  border-radius: 12px !important;
+  padding-right: 36px !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+}
+body:not(.dark) select,
+html:not(.dark) body select {
+  background-color: rgba(255,255,255,0.92) !important;
+  border: 1.5px solid rgba(180,130,70,0.3) !important;
+  color: #5c3d1e !important;
+}
+body.dark select,
+html.dark body select {
+  background-color: #1e1710 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c4a853'/%3E%3C/svg%3E") !important;
+  border: 1.5px solid rgba(196,168,83,0.25) !important;
+  color: #f0e8df !important;
+}
+select:focus {
+  outline: none !important;
+  border-color: var(--honey, #D4A853) !important;
+  box-shadow: 0 0 0 3px rgba(212,168,83,0.14) !important;
+}
+
+/* POLISH: Weekly stats strip — compact horizontal layout on mobile */
+@media (max-width: 767px) {
+  .weekly-stats {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 0 !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+  }
+  .weekly-stats::-webkit-scrollbar { display: none !important; }
+  .weekly-stat {
+    flex: 1 1 60px !important;
+    border-radius: 0 !important;
+    border-right: 1px solid var(--border, rgba(180,130,70,0.15)) !important;
+    box-shadow: none !important;
+    text-align: center !important;
+    padding: 10px 6px !important;
+    min-width: 56px !important;
+  }
+  .weekly-stat:last-child { border-right: none !important; }
+  .weekly-stat .stat-num, .weekly-stat > strong,
+  [class*="stat-value"], [class*="weekly-num"] {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    display: block !important;
+    color: var(--honey, #D4A853) !important;
+  }
+  .weekly-stat .stat-label, .weekly-stat > span:not(strong),
+  [class*="stat-label"], [class*="weekly-label"] {
+    font-size: 10px !important;
+    opacity: 0.6 !important;
+    display: block !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+  }
+}
+
+/* Extend reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #view-today > * { animation: none !important; }
+}
+</style>
 
 </body>
 </html>
