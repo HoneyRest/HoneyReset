@@ -1825,5 +1825,124 @@ select.input{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg 
   }
 })();
 </script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HONEY RESET — ACCESS BLOCKER RESCUE v1
+     Fixes:
+       1. Steps 2 & 3 Continue button disabled until goal/focus selected
+       2. Skip button only moves step 1→2, no full exit path
+     Strategy:
+       • MutationObserver strips `disabled` from .onb-next as soon as it's set
+       • Capturing click listener intercepts `data-onb-action="skip"` at any step
+         and exits onboarding directly (localStorage + DOM)
+     ═══════════════════════════════════════════════════════════ -->
+<script id="honey-rescue-v1">
+(function () {
+  'use strict';
+
+  /* ── 1. Keep all .onb-next buttons permanently enabled ── */
+  function stripDisabled() {
+    document.querySelectorAll('.onb-next[disabled]').forEach(function (btn) {
+      btn.removeAttribute('disabled');
+    });
+  }
+
+  var observer = new MutationObserver(function (mutations) {
+    var needsStrip = false;
+    mutations.forEach(function (m) {
+      if (m.type === 'attributes' && m.attributeName === 'disabled') needsStrip = true;
+      if (m.type === 'childList') needsStrip = true;
+    });
+    if (needsStrip) stripDisabled();
+  });
+
+  function startObserver() {
+    var onb = document.getElementById('onboarding');
+    if (onb) {
+      observer.observe(onb, { subtree: true, attributes: true, childList: true, attributeFilter: ['disabled'] });
+    }
+    stripDisabled();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startObserver);
+  } else {
+    startObserver();
+  }
+
+  /* ── 2. Skip at any step → enter the app ── */
+  function forceFinish() {
+    /* Patch localStorage state */
+    try {
+      var raw = localStorage.getItem('honey-reset:v2');
+      var st = raw ? JSON.parse(raw) : {};
+      st.onboarded = true;
+      if (!st.journeyStart) st.journeyStart = new Date().toISOString();
+      st.lastUpdated = new Date().toISOString();
+      localStorage.setItem('honey-reset:v2', JSON.stringify(st));
+    } catch (e) {}
+
+    /* Show app, hide onboarding */
+    var onb = document.getElementById('onboarding');
+    var app = document.getElementById('app');
+    if (onb) onb.hidden = true;
+    if (app) app.hidden = false;
+    document.body.dataset.onboarded = 'true';
+
+    /* Show desktop sidebar if wide */
+    var side = document.querySelector('.desktop-side');
+    if (side) side.hidden = !window.matchMedia('(min-width:1100px)').matches;
+  }
+
+  document.addEventListener('click', function (e) {
+    var skipBtn = e.target.closest('[data-onb-action="skip"]');
+    if (!skipBtn) return;
+    /* Only intercept if onboarding is actually visible */
+    var onb = document.getElementById('onboarding');
+    if (!onb || onb.hidden) return;
+    /* Find current step */
+    var visibleStep = onb.querySelector('[data-onb-step]:not([hidden])');
+    var step = visibleStep ? Number(visibleStep.dataset.onbStep) : 0;
+    /* Step 1 skip: the original handler sends us to step 2 — let it.
+       Any other step skip: we take over and finish. */
+    if (step !== 1) {
+      e.stopImmediatePropagation();
+      forceFinish();
+    }
+  }, true); /* capture phase — runs before IIFE bubble handler */
+
+  /* ── 3. Also add a Skip link on steps 2 and 3 (since back≠skip) ── */
+  function addSkipLinks() {
+    [2, 3].forEach(function (stepNum) {
+      var step = document.querySelector('[data-onb-step="' + stepNum + '"]');
+      if (!step) return;
+      var actions = step.querySelector('.onb-actions');
+      if (!actions) return;
+      /* Replace the Back button label with "Back | Skip all" */
+      var backBtn = actions.querySelector('[data-onb-action="back"]');
+      if (backBtn && !backBtn.dataset.rescuePatched) {
+        backBtn.dataset.rescuePatched = '1';
+        /* Add a separate Skip-all link */
+        var skipAll = document.createElement('button');
+        skipAll.type = 'button';
+        skipAll.className = 'onb-skip';
+        skipAll.setAttribute('data-onb-action', 'skip-all');
+        skipAll.textContent = 'Skip all';
+        actions.insertBefore(skipAll, backBtn);
+
+        skipAll.addEventListener('click', function () {
+          forceFinish();
+        });
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addSkipLinks);
+  } else {
+    addSkipLinks();
+  }
+})();
+</script>
 </body>
 </html>
