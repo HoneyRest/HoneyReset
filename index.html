@@ -1827,6 +1827,16 @@ select.input{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg 
 </script>
 
 <!-- ═══════════════════════════════════════════════════════════
+     HONEY RESET — CRITICAL CSS FIX
+     .onb-step { display:flex } overrides browser [hidden]=none
+     causing all 4 onboarding steps to render simultaneously.
+     ═══════════════════════════════════════════════════════════ -->
+<style id="honey-hidden-fix">
+/* Restore correct [hidden] behaviour — overridden by .onb-step{display:flex} */
+[hidden] { display: none !important; }
+</style>
+
+<!-- ═══════════════════════════════════════════════════════════
      HONEY RESET — ACCESS BLOCKER RESCUE v1
      Fixes:
        1. Steps 2 & 3 Continue button disabled until goal/focus selected
